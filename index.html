@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <title>Viktor Smunt's Website</title>
+    <style>
+      /* Add a responsive style for the img element */
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* Add a responsive style for the h1 and p elements */
+      @media (max-width: 600px) {
+        h1, p {
+          font-size: 16px;
+          text-align: center;
+        }
+      }
+
+      /* Add a default dark mode style */
+      body {
+        background-color: #333;
+        color: #fff;
+      }
+
+      /* Add a default light mode style */
+      body.light {
+        background-color: #fff;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to Viktor Smunt's Website</h1>
+    <p>Every time you visit this page, you will see a different image from the repository.</p>
+    <button id="dark-mode-toggle">Toggle Dark Mode</button>
+    <script>
+      // Path to the folder containing the images
+      var imageFolderPath = "assets/images";
+
+      // Get a list of files in the folder
+      fetch(imageFolderPath)
+        .then(response => response.json())
+        .then(files => {
+          // Filter the list of files to only include images
+          var imageFiles = files.filter(file => file.type === "file" && file.name.match(/\.(jpg|jpeg|png|gif)$/i));
+
+          // Get a random image file from the list
+          var imageFile = imageFiles[Math.floor(Math.random() * imageFiles.length)];
+
+          // Display the image on the page
+          var imgElement = document.createElement("img");
+          imgElement.src = imageFile.download_url;
+          imgElement.alt = "Random Image from Repository";
+          document.body.appendChild(imgElement);
+        });
+
+      // Get the dark mode toggle button
+      var darkModeToggle = document.getElementById("dark-mode-toggle");
+
+      // Add a click event listener to the button
+      darkModeToggle.addEventListener("click", function() {
+        // Toggle the "light" class on the body element
+        document.body.classList.toggle("light");
+      });
+    </script>
+  </body>
+</html>
